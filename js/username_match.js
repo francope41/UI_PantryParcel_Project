@@ -1,8 +1,6 @@
-document.querySelector(".login form").addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    var enteredUsername = event.target[0].value;
-    var enteredPassword = event.target[1].value;
+document.getElementById("loginButton").addEventListener("click", function() {
+    var enteredUsername = document.querySelector(".login input[type=text]").value;
+    var enteredPassword = document.querySelector(".login input[type=password]").value;
 
     fetch('users.json')
     .then(response => response.json())
@@ -10,8 +8,8 @@ document.querySelector(".login form").addEventListener("submit", function(event)
         var user = data.users.find(u => u.username === enteredUsername && u.password === enteredPassword);
 
         if (user) {
-            alert("Logged in successfully!");
-            // Redirect to a logged-in page or perform another action
+            // If credentials are correct, redirect to the "Redirected" page
+            window.location.href = "redirect.html";
         } else {
             alert("Invalid username or password");
         }
