@@ -19,7 +19,7 @@ document.getElementById("loginButton").addEventListener("click", function() {
     });
 });
 
-document.getElementById("registrationButton").addEventListener("click", function() {
+document.getElementById("registrationButton").addEventListener("click", function () {
     var enteredUsername = document.querySelector(".registration input[type=text]").value;
     var enteredPassword = document.querySelector(".registration input[type=password]").value;
     var confirmPassword = document.querySelector(".registration input[type=password][placeholder='Confirm your password']").value;
@@ -38,16 +38,13 @@ document.getElementById("registrationButton").addEventListener("click", function
             if (userExists) {
                 alert("Username already exists. Please choose a different one.");
             } else {
-                // Add the new user to the list and update the JSON
+                // Add the new user to the list
                 data.users.push({ username: enteredUsername, password: enteredPassword });
 
-                // Convert the updated data back to a JSON string
-                var updatedData = JSON.stringify(data);
-
-                // Save the updated data to the users.json file
+                // Now, save the updated data back to the users.json file
                 fetch('users.json', {
                     method: 'PUT',
-                    body: updatedData,
+                    body: JSON.stringify(data), // Convert the data back to a JSON string
                     headers: {
                         'Content-Type': 'application/json',
                     },
