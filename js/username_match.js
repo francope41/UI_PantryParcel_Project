@@ -1,22 +1,22 @@
-document.getElementById("loginButton").addEventListener("click", function() {
+document.getElementById("loginButton").addEventListener("click", function () {
     var enteredUsername = document.querySelector(".login input[type=text]").value;
     var enteredPassword = document.querySelector(".login input[type=password]").value;
 
     fetch('users.json')
-    .then(response => response.json())
-    .then(data => {
-        var user = data.users.find(u => u.username === enteredUsername && u.password === enteredPassword);
+        .then(response => response.json())
+        .then(data => {
+            var user = data.users.find(u => u.username === enteredUsername && u.password === enteredPassword);
 
-        if (user) {
-            // If credentials are correct, redirect to the "Redirected" page
-            window.location.href = "redirect.html";
-        } else {
-            alert("Invalid username or password");
-        }
-    })
-    .catch(error => {
-        console.error("Error fetching users:", error);
-    });
+            if (user) {
+                // If credentials are correct, redirect to the "Redirected" page
+                window.location.href = "redirect.html";
+            } else {
+                alert("Invalid username or password");
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching users:", error);
+        });
 });
 
 document.getElementById("registrationButton").addEventListener("click", function () {
@@ -38,13 +38,16 @@ document.getElementById("registrationButton").addEventListener("click", function
             if (userExists) {
                 alert("Username already exists. Please choose a different one.");
             } else {
-                // Add the new user to the list
+                // Add the new user to the list and update the JSON
                 data.users.push({ username: enteredUsername, password: enteredPassword });
 
-                // Now, save the updated data back to the users.json file
+                // Convert the updated data back to a JSON string
+                var updatedData = JSON.stringify(data);
+
+                // Save the updated data to the users.json file
                 fetch('users.json', {
                     method: 'PUT',
-                    body: JSON.stringify(data), // Convert the data back to a JSON string
+                    body: updatedData,
                     headers: {
                         'Content-Type': 'application/json',
                     },
